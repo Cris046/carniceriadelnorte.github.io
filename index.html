@@ -1,0 +1,827 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Carnicería del Norte — Versión Viva</title>
+  <meta name="description" content="Carnicería del Norte — frescura y tradición. Hero con parallax, galería scroll, pantalla dividida.">
+  <style>
+    :root {
+      --rojo-corall: #e06a65;
+      --azul-pastel: #3b6b9a;
+      --fondo: #00417e;
+      --card:#ffffff;
+      --muted:#7b8794;
+      --max:1200px;
+      --radius:14px;
+      --glass: rgba(255,255,255,0.6);
+    
+--card-w: 320px;
+--card-h: 220px;
+}
+    
+    * { box-sizing:border-box; margin:0; padding:0; }
+    html,body {
+      height:100%;
+      background:var(--fondo);
+      font-family:Inter, Roboto, system-ui, Arial, sans-serif;
+      color:#111;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    a { color:inherit; }
+
+
+    header.main-header {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 60;
+      width: calc(100% - 32px);
+      max-width: var(--max);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 16px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.7), rgba(255,255,255,0.55));
+      backdrop-filter: blur(6px);
+      border-radius: 999px;
+      box-shadow: 0 6px 20px rgba(17,24,39,0.08);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: transparent; 
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+      overflow: hidden;
+    }
+
+    .site-name {
+      font-weight: 700;
+      color: var(--azul-pastel);
+      font-size: 1.05rem;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    nav.nav {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+    .nav a {
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-weight: 600;
+      color: var(--azul-pastel);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .nav a:hover {
+  color: #fff;
+  background: linear-gradient(90deg, var(--azul-pastel), var(--rojo-corall));
+  box-shadow: 0 0 12px rgba(59,107,154,0.6), 0 0 22px rgba(224,106,101,0.5);
+  text-shadow: 0 0 6px rgba(255,255,255,0.6);
+  transition: all 0.25s ease-in-out;
+  transform: scale(1.05);
+}
+
+    .nav a.cta { background: var(--azul-pastel); color: #fff; }
+
+    .menu-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      font-size: 1.6rem;
+      color: var(--azul-pastel);
+      cursor: pointer;
+    }
+
+
+    @media (max-width: 820px) {
+      header.main-header {
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 8px 14px;
+      }
+
+      .logo { width: 46px; height: 46px; }
+      .site-name { font-size: 0.95rem; }
+
+      nav.nav {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: rgba(255,255,255,0.92);
+        border-radius: 14px;
+        margin-top: 8px;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.1);
+        padding: 10px 0;
+        z-index: 61; 
+      }
+
+      nav.nav.active {
+        display: flex;
+        animation: fadeIn 0.28s ease;
+      }
+
+      .nav a {
+        display: block;
+        padding: 10px;
+        text-align: center;
+      }
+
+      .menu-toggle { display: block; }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-5px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    }
+
+
+
+.hero-wrap {
+  position: relative;
+  height: 78vh;
+  min-height: 420px;
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 20px;
+  margin: 86px auto 28px;
+  max-width: var(--max);
+  padding: 0 16px;
+  perspective: 1000px;
+}
+
+.parallax-layer {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  will-change: transform;
+  transition: transform 0.2s ease-out;
+  transform-style: preserve-3d;
+}
+
+.parallax-layer.bg-a {
+  background-image: url('https://irp-cdn.multiscreensite.com/aa7c2e8c/MOBILE/jpg/1234088-carniceria-horacio-banner7ba6.jpg?v=7.3.45002');
+  filter: contrast(0.95) saturate(0.95);
+  transform-origin: center;
+}
+
+.parallax-layer.bg-b {
+  background-image: linear-gradient(90deg, rgba(235,87,80,0.18), rgba(60,103,155,0.18));
+}
+
+.hero-content {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  align-items: center;
+  gap: 28px;
+  padding: 48px;
+  background: linear-gradient(180deg, rgba(255, 192, 192, 0.08), rgba(255, 166, 166, 0.02));
+  border-radius: 18px;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease-out;
+}
+
+.hero-text {
+  padding: 12px;
+}
+.hero-text h1 {
+  font-size: 2.6rem;
+  color: #fff;
+  margin-bottom: 8px;
+  line-height: 1.02;
+  letter-spacing: 0.6px;
+  text-shadow: 0 8px 30px rgba(0,0,0,0.35);
+}
+.hero-text p {
+  color: rgba(255,255,255,0.95);
+  font-size: 1.05rem;
+  margin-bottom: 18px;
+}
+
+.hero-card {
+  background: linear-gradient(180deg, var(--card), rgba(255,255,255,0.9));
+  padding: 14px;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(17,24,39,0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transform: translateZ(40px) rotateY(-6deg);
+  transition: transform 0.35s ease;
+}
+.hero-card:hover {
+  transform: translateZ(60px) rotateY(0deg) scale(1.03);
+}
+.hero-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+@media (max-width: 980px) {
+  .hero-content {
+    grid-template-columns: 1fr;
+  }
+  .hero-card img {
+    height: 180px;
+  }
+}
+@media (max-width: 600px) {
+  .hero-wrap {
+    height: 64vh;
+  }
+  .hero-text h1 {
+    font-size: 1.6rem;
+  }
+  .hero-card img {
+    height: 200px;
+  }
+}
+
+
+    .hero-content {
+      position:relative;
+      z-index:4;
+      display:grid;
+      grid-template-columns:1fr 420px;
+      align-items:center;
+      gap:28px;
+      padding:48px;
+      background:linear-gradient(180deg,rgba(255, 192, 192, 0.08),rgba(255, 166, 166, 0.02));
+      border-radius:18px;
+      transform-style:preserve-3d;
+    }
+
+    .hero-text { padding:12px; }
+    .hero-text h1 {
+      font-size:2.6rem;
+      color:#fff;
+      margin-bottom:8px;
+      line-height:1.02;
+      letter-spacing:0.6px;
+      text-shadow:0 8px 30px rgba(0,0,0,0.35);
+      transform-origin:center;
+    }
+    .hero-text p {
+      color:rgba(255,255,255,0.95);
+      font-size:1.05rem;
+      margin-bottom:18px;
+    }
+
+
+    .rotor {
+      display:inline-block;
+      transform-style:preserve-3d;
+      will-change:transform;
+      animation: funRotate 3s ease-in-out infinite;
+      backface-visibility: hidden; 
+    }
+    .rotor:hover, .rotor:focus {
+      animation-play-state: paused; 
+    }
+
+    @keyframes funRotate {
+      0%   { transform: perspective(900px) rotateY(-14deg) translateY(0) rotateX(0) scale(1); }
+      25%  { transform: perspective(900px) rotateY(22deg) translateY(-6px) rotateX(4deg) scale(1.02); }
+      50%  { transform: perspective(900px) rotateY(180deg) translateY(0) rotateX(8deg) scale(1.04); }
+      75%  { transform: perspective(900px) rotateY(340deg) translateY(-6px) rotateX(4deg) scale(1.02); }
+      100% { transform: perspective(900px) rotateY(346deg) translateY(0) rotateX(0) scale(1); }
+    }
+
+    .hero-cta { display:flex; gap:12px; }
+    .btn {
+      padding:12px 18px;
+      border-radius:12px;
+      font-weight:700;
+      border:none;
+      cursor:pointer;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .btn:active{ transform: translateY(1px) scale(.995); }
+    .btn-primary { background:var(--rojo-corall); color:#fff; box-shadow:0 8px 20px rgba(224,106,101,0.18); }
+    .btn-outline { background:transparent; color:#fff; border:2px solid rgba(255,255,255,0.18); }
+
+    .hero-card {
+      background:linear-gradient(180deg,var(--card),rgba(255,255,255,0.9));
+      padding:14px;
+      border-radius:12px;
+      box-shadow:0 8px 30px rgba(17,24,39,0.12);
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      transform: translateZ(40px) rotateY(-6deg); 
+    }
+    .hero-card img { width:100%; height:220px; object-fit:cover; border-radius:10px; }
+    .hero-card h4 { color:var(--azul-pastel); }
+
+    .split {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      max-width:var(--max);
+      margin:20px auto;
+      padding:0 16px;
+    }
+    .split .left {
+      background:linear-gradient(180deg,#ffb0ad,#ffb0ad);
+      padding:28px;
+      border-radius:16px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      transform: translateZ(10px);
+    }
+    .split .right {
+      background:var(--card);
+      padding:28px;
+      border-radius:50px;
+      box-shadow:0 6px 18px rgb(226, 255, 192);
+    }
+    .split h3 { color:var(--azul-pastel); }
+
+    .gallery {
+width: 100%;
+overflow: hidden;
+padding: 40px 0;
+}
+
+
+.scroll-wrap {
+width: 100%;
+position: relative;
+}
+
+
+.scroll-area {
+display: flex;
+gap: 20px;
+width: 100px;
+animation: scroll 22s linear infinite;
+}
+
+
+@keyframes scroll {
+from { transform: translateX(0); }
+to { transform: translateX(calc(-1 * (var(--card-w) * 5))); }
+}
+
+
+.card-tile {
+width: var(--card-w);
+height: var(--card-h);
+background: #222;
+border-radius: 14px;
+overflow: hidden;
+position: relative;
+flex-shrink: 0;
+transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+
+.card-tile img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+filter: brightness(0.8);
+transition: 0.35s ease;
+}
+
+
+.card-tile:hover {
+transform: scale(1.1);
+box-shadow: 0 0 30px rgba(255, 215, 120, 0.75);
+z-index: 10;
+}
+
+
+.card-tile:hover img {
+filter: brightness(1);
+}
+
+
+.txt {
+position: absolute;
+bottom: 0;
+background: linear-gradient(transparent, rgba(0,0,0,0.7));
+width: 100%;
+padding: 15px;
+color: #fff;
+font-size: 15px;
+}
+
+
+
+    .card-tile {
+      flex:0 0 70%;
+      min-width:320px;
+      background:var(--card);
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 8px 24px rgba(17,24,39,0.08);
+      cursor:pointer;
+      transition: transform .22s ease, box-shadow .22s ease;
+    }
+    .card-tile:hover{ transform: translateY(-6px) scale(1.01); box-shadow:0 18px 48px rgba(17,24,39,0.12); }
+    .card-tile img { width:100%; height:280px; object-fit:cover; }
+    .card-tile .txt { padding:12px; }
+
+    .thumbs {
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      padding:12px 4px;
+      margin-top:12px;
+    }
+    .thumbs img {
+      width:86px;
+      height:60px;
+      object-fit:cover;
+      border-radius:8px;
+      border:3px solid transparent;
+      cursor:pointer;
+    }
+    .thumbs img.active { border-color:var(--rojo-corall); }
+
+    footer {
+      width: 100vw; 
+      margin: 0;
+      padding: 22px 16px;
+      text-align: center;
+      color: #fff;
+      background-color: #e06a65;
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw; 
+      margin-right: -50vw;
+    }
+
+   
+   
+    body.menu-open::before{
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 55; 
+      background: rgba(12,18,28,0.28);
+      backdrop-filter: blur(8px) saturate(115%);
+      -webkit-backdrop-filter: blur(8px) saturate(115%);
+      transition: opacity .22s ease;
+      pointer-events: none; 
+      
+    }
+
+   
+  
+   
+    @media(max-width:980px){
+      .hero-content{grid-template-columns:1fr;}
+      .hero-card img{height:180px;}
+      .split{grid-template-columns:1fr;}
+      .card-tile{flex:0 0 80%;}
+    }
+    @media(max-width:600px){
+      .hero-wrap{height:64vh;}
+      .hero-text h1{font-size:1.6rem;}
+      .card-tile img{height:200px;}
+      .thumbs img{width:66px;height:46px;}
+    }
+
+
+
+
+
+    .acces-card {
+  position: relative;
+  overflow: visible;
+}
+
+
+.acces-menu {
+  position: absolute;
+  top: 10px;
+  right: -10px;
+  width: 180px;
+
+  background: #ffffffee;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+.acces-card:hover .acces-menu {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+
+.acces-menu button {
+  width: 100%;
+  padding: 8px;
+  margin: 4px 0;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  background: var(--azul-pastel);
+  color: #fff;
+  transition: transform .15s;
+}
+.acces-menu button:hover {
+  transform: scale(1.05);
+}
+
+  </style>
+</head>
+<body>
+
+  <header class="main-header" role="banner">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <img src="ima/logo oficial para usar -13.png" alt="Logo Carnicería del Norte" style="width:100%;height:100%;object-fit:cover;border-radius:999px;">
+      </div>
+      <div>
+        <div class="site-name">Carnicería del Norte</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px">Calidad y frescura</div>
+      </div>
+    </div>
+
+    <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+
+     <nav class="nav" role="navigation" aria-label="Principal">
+  <a href="index.html">Inicio</a>
+  <a href="productos.html">Productos</a>
+  <a href="sobrenosotros.html">Sobre Nosotros</a>
+  <a class="cta" href="contacto.html">Contacto</a>
+</nav>
+
+  </header>
+
+  <section class="hero-wrap" id="inicio">
+    <div class="parallax-layer bg-a" data-depth="0.15" aria-hidden="true"></div>
+    <div class="parallax-layer bg-b" data-depth="0.28" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <div class="hero-text">
+
+        <h1><span class="rotor" tabindex="0">Bienvenido a Carnicería del Norte</span></h1>
+        <p>Frescura en cada corte, tradición en cada receta. Somos tu aliado para parrillas, recetas familiares y encargos especiales.</p>
+        <div class="hero-cta">
+         <a href="productos.html">
+  <button class="btn btn-primary">Ver productos</button>
+</a>
+
+<a href="sobrenosotros.html">
+  <button class="btn btn-outline">Conócenos</button>
+</a>
+        </div>
+      </div>
+
+    <aside class="hero-card acces-card" aria-label="Accesibilidad">
+  <img src="https://cdnx.jumpseller.com/carnes-premium/image/65119150/thumb/636/636?1751606417" alt="Cortes premium">
+
+  <div class="acces-main">
+    <h4>Cortes Premium</h4>
+    <p>Selección especial para tus mejores momentos.</p>
+  </div>
+
+  <div class="acces-menu">
+    <button data-act="bigger">Aumentar texto</button>
+    <button data-act="smaller">Reducir texto</button>
+    <button data-act="contrast">Alto contraste</button>
+    <button data-act="reset">Restablecer</button>
+  </div>
+</aside>
+    </div>
+  </section>
+
+  <section class="split" aria-label="Nuestra historia y servicios">
+    <div class="left">
+      <h3>Nuestra historia</h3>
+      <p style="color:var(--muted)">En Carnicería del Norte combinamos tradición y técnica para ofrecer productos de primera calidad. Desde proveedores locales hasta cortes preparados con cariño.</p>
+      <ul style="margin-top:8px;color:var(--muted)">
+        <li>Selección local y responsable</li>
+        <li>Cortes artesanales a pedido</li>
+        <li>Atención personalizada</li>
+      </ul>
+    </div>
+    <div class="right">
+      <h3>Servicios</h3>
+      <p style="color:var(blue)">Te ofrecemos:</p>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px">
+        <div style="background:linear-gradient(180deg,rgba(59,107,154,0.04),transparent);padding:12px;border-radius:10px">Asesoría para asados</div>
+        <div style="background:linear-gradient(180deg,rgba(224,106,101,0.03),transparent);padding:12px;border-radius:10px">Cortes a medida</div>
+        <div style="background:linear-gradient(180deg,rgba(59,107,154,0.04),transparent);padding:12px;border-radius:10px"></div>
+        <div style="background:linear-gradient(180deg,rgba(224,106,101,0.03),transparent);padding:12px;border-radius:10px"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery" id="galeria">
+<div class="scroll-wrap">
+<div class="scroll-area" id="scrollArea">
+
+
+
+  <article class="card-tile"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1600&auto=format&fit=crop"/><div class="txt"><strong>Caja Parrillera</strong><p>Ideal para reuniones.</p></div></article>
+
+
+
+  <article class="card-tile"><img src="https://www.distribuidoracholula.com/cdn/shop/collections/NOTICIA-4-Como-reducir-la-cantidad-de-sal-en-embutidos.jpg?v=1753209327"/><div class="txt"><strong>Embutidos artesanales</strong><p>Sabor tradicional.</p></div></article>
+
+
+
+  <article class="card-tile"><img src="https://harrys.com.mx/wp-content/uploads/2020/04/kobe-beef-harrys.jpg"/><div class="txt"><strong>Promoción semanal</strong><p>No te la pierdas.</p></div></article>
+
+
+
+  <article class="card-tile"><img src="https://www.brillante.es/wp-content/uploads/2024/08/cortes-carne-de-cerdo.jpg"/><div class="txt"><strong>Cortes Premium</strong><p>Calidad garantizada.</p></div></article>
+
+  <article class="card-tile"><img src="https://sterlingsilverpremiumbeef.com/wp-content/uploads/2019/11/KITTEN_Crowd-Favorite-Modern-Steakhouse-Cuts.jpg"/><div class="txt"><strong>Asado Especial</strong><p>Perfecto para compartir.</p></div></article>
+
+
+
+
+
+
+
+
+
+
+<article class="card-tile"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1600&auto=format&fit=crop"/><div class="txt"><strong>Caja Parrillera</strong><p>Ideal para reuniones.</p></div></article>
+
+
+<article class="card-tile"><img src="https://www.distribuidoracholula.com/cdn/shop/collections/NOTICIA-4-Como-reducir-la-cantidad-de-sal-en-embutidos.jpg?v=1753209327"/><div class="txt"><strong>Embutidos artesanales</strong><p>Sabor tradicional.</p></div></article>
+
+
+<article class="card-tile"><img src="https://harrys.com.mx/wp-content/uploads/2020/04/kobe-beef-harrys.jpg"/><div class="txt"><strong>Promoción semanal</strong><p>No te la pierdas.</p></div></article>
+
+
+<article class="card-tile"><img src="https://www.brillante.es/wp-content/uploads/2024/08/cortes-carne-de-cerdo.jpg"/><div class="txt"><strong>Cortes Premium</strong><p>Calidad garantizada.</p></div></article>
+
+
+<article class="card-tile"><img src="https://sterlingsilverpremiumbeef.com/wp-content/uploads/2019/11/KITTEN_Crowd-Favorite-Modern-Steakhouse-Cuts.jpg"/><div class="txt"><strong>Asado Especial</strong><p>Perfecto para compartir.</p></div></article>
+
+
+
+</div>
+</div>
+</section>
+
+      <div class="thumbs" id="thumbs">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=400&auto=format&fit=crop" data-index="0" alt="mini 1">
+        <img src="https://www.distribuidoracholula.com/cdn/shop/collections/NOTICIA-4-Como-reducir-la-cantidad-de-sal-en-embutidos.jpg?v=1753209327" data-index="1" alt="mini 2">
+        <img src="https://harrys.com.mx/wp-content/uploads/2020/04/kobe-beef-harrys.jpg" data-index="2" alt="mini 3">
+        <img src="https://www.brillante.es/wp-content/uploads/2024/08/cortes-carne-de-cerdo.jpg" data-index="3" alt="mini 4">
+        <img src="https://sterlingsilverpremiumbeef.com/wp-content/uploads/2019/11/KITTEN_Crowd-Favorite-Modern-Steakhouse-Cuts.jpg" data-index="4" alt="mini 5">
+      
+      
+      </div>
+
+
+    </div>
+  </section>
+
+  <footer id="contacto">
+    <p>© 2025 Carnicería del Norte — Calidad y frescura.</p>
+  </footer>
+
+  <script>
+
+(function(){
+      const layers = document.querySelectorAll('.parallax-layer');
+      function onScroll(){
+        const sc = window.scrollY;
+        layers.forEach(layer => {
+          const depth = parseFloat(layer.dataset.depth || 0.2);
+          const movement = sc * depth;
+          layer.style.transform = `translateY(${movement}px) scale(${1 + sc/6000})`;
+        })
+      }
+      window.addEventListener('scroll', onScroll, {passive:true});
+      onScroll();
+    })();
+
+    (function(){
+      const scrollArea = document.getElementById('scrollArea');
+      scrollArea.addEventListener('wheel', (e)=>{
+        if(Math.abs(e.deltaY) > Math.abs(e.deltaX)){
+          scrollArea.scrollLeft += e.deltaY;
+          e.preventDefault();
+        }
+      }, {passive:false});
+    })();
+
+    (function(){
+      const thumbs = document.getElementById('thumbs').querySelectorAll('img');
+      const cards = document.querySelectorAll('.card-tile');
+      thumbs.forEach(t=>{
+        t.addEventListener('click', ()=>{
+          const idx = +t.dataset.index;
+          thumbs.forEach(i=>i.classList.remove('active'));
+          t.classList.add('active');
+          cards[idx].scrollIntoView({behavior:'smooth', inline:'center'});
+        })
+      })
+      thumbs[0].classList.add('active');
+    })();
+
+
+    (function(){
+      const btn = document.querySelector('.menu-toggle');
+      const nav = document.querySelector('.nav');
+      btn.addEventListener('click', ()=>{
+        const isOpen = nav.classList.toggle('active');
+        document.body.classList.toggle('menu-open', isOpen);
+        btn.setAttribute('aria-expanded', String(isOpen));
+      });
+
+
+      document.addEventListener('click', (e)=>{
+        const target = e.target;
+        if(window.innerWidth <= 820){
+          if(!nav.contains(target) && !btn.contains(target) && nav.classList.contains('active')){
+            nav.classList.remove('active');
+            document.body.classList.remove('menu-open');
+            btn.setAttribute('aria-expanded', 'false');
+          }
+        }
+      });
+
+
+      document.addEventListener('keydown', (e)=>{
+        if(e.key === 'Escape' && nav.classList.contains('active')){
+          nav.classList.remove('active');
+          document.body.classList.remove('menu-open');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.focus();
+        }
+      });
+    })();
+    (function(){
+  const html = document.documentElement;
+
+  document.querySelectorAll(".acces-menu button").forEach(btn => {
+    btn.addEventListener("click", () => {
+
+      const a = btn.dataset.act;
+
+      if(a === "bigger"){
+        html.style.fontSize = "110%";
+      }
+      if(a === "smaller"){
+        html.style.fontSize = "90%";
+      }
+      if(a === "contrast"){
+        document.body.classList.toggle("high-contrast");
+      }
+      if(a === "reset"){
+        html.style.fontSize = "";
+        document.body.classList.remove("high-contrast");
+      }
+    });
+  });
+})();
+</script>
+
+<style>
+
+body.high-contrast {
+  filter: invert(1) contrast(1.2);
+}
+</style>
+  </script>
+
+</body>
+</html>

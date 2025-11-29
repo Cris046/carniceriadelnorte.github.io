@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Productos — Carnicería del Norte</title>
+  <meta name="description" content="Nuestros cortes de carne frescos y seleccionados de Carnicería del Norte">
+  <style>
+    :root {
+      --rojo-corall: #e06a65;
+      --azul-pastel: #3b6b9a;
+      --fondo: #00417e;
+      --card:#ffffff;
+      --muted:#7b8794;
+      --max:1200px;
+      --radius:14px;
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    html,body {
+      height:100%;
+      background:var(--fondo);
+      font-family:Inter, Roboto, system-ui, Arial, sans-serif;
+      color:#111;
+      scroll-behavior: smooth;
+    }
+    a { color:inherit; }
+
+
+    header.main-header {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 60;
+      width: calc(100% - 32px);
+      max-width: var(--max);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 16px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.7), rgba(255,255,255,0.55));
+      backdrop-filter: blur(6px);
+      border-radius: 999px;
+      box-shadow: 0 6px 20px rgba(17,24,39,0.08);
+    }
+
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .logo {
+      width: 56px; height: 56px; border-radius: 999px;
+      overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .site-name { font-weight: 700; color: var(--azul-pastel); font-size: 1.05rem; }
+
+    nav.nav { display: flex; gap: 10px; align-items: center; }
+
+    .nav a {
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-weight: 600;
+      background: var(--azul-pastel);
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: all 0.25s ease-in-out;
+      box-shadow: 0 4px 12px rgba(59,107,154,0.25);
+    }
+
+    .nav a:hover {
+      background: linear-gradient(90deg, var(--azul-pastel), var(--rojo-corall));
+      box-shadow: 0 0 14px rgba(59,107,154,0.6), 0 0 22px rgba(224,106,101,0.5);
+      text-shadow: 0 0 6px rgba(255,255,255,0.7);
+      transform: scale(1.05);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      font-size: 1.6rem;
+      color: var(--azul-pastel);
+      cursor: pointer;
+    }
+
+    @media (max-width: 820px) {
+      nav.nav { display: none; flex-direction: column; width: 100%; background: rgba(255,255,255,0.95); border-radius: 14px; margin-top: 8px; }
+      nav.nav.active { display: flex; animation: fadeIn 0.3s ease; }
+      .nav a { display: block; text-align: center; padding: 12px; }
+      .menu-toggle { display: block; }
+      @keyframes fadeIn { from{opacity:0;transform:translateY(-8px);} to{opacity:1;transform:translateY(0);} }
+    }
+
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      height: 80vh;
+      margin-top: 90px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-left {
+      background: linear-gradient(135deg, rgba(59,107,154,0.9), rgba(224,106,101,0.8));
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px;
+      text-shadow: 0 4px 14px rgba(0,0,0,0.4);
+      z-index: 2;
+    }
+
+    .hero-left h1 { font-size: 2.8rem; margin-bottom: 16px; }
+    .hero-left p { font-size: 1.2rem; max-width: 480px; line-height: 1.6; }
+
+    .hero-right {
+      position: relative;
+      background-image: url('ima/3.jpg');
+  background-size: cover;
+  background-position: left;
+  background-repeat: repeat-x;
+  background-attachment: fixed;
+  animation: moverFondo 15s linear infinite;
+}
+
+
+@keyframes moverFondo {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+
+
+    .gallery-container {
+      max-width: var(--max);
+      margin: 60px auto;
+      padding: 0 16px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      overflow: hidden;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      overflow: hidden;
+      align-items: center;
+    }
+
+    .column img {
+      width: 100%;
+      max-width: 320px;
+      height: 240px;
+      border-radius: 16px;
+      object-fit: cover;
+      cursor: pointer;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    }
+
+    .column img:hover {
+      transform: scale(1.08);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.3);
+    }
+
+
+    .column:nth-child(1) img { animation: moveUp 9s ease-in-out infinite alternate; }
+    .column:nth-child(2) img { animation: moveDown 10s ease-in-out infinite alternate; }
+    .column:nth-child(3) img { animation: moveUp 9s ease-in-out infinite alternate; }
+
+    @keyframes moveUp { from{transform:translateY(0);} to{transform:translateY(-60px);} }
+    @keyframes moveDown { from{transform:translateY(0);} to{transform:translateY(60px);} }
+
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-content {
+      background: #fff;
+      border-radius: 16px;
+      max-width: 800px;
+      width: 100%;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+      overflow: hidden;
+      animation: popIn 0.3s ease;
+    }
+    @keyframes popIn { from{transform:scale(0.9);opacity:0;} to{transform:scale(1);opacity:1;} }
+    .modal-content img { width: 100%; height: 400px; object-fit: cover; }
+    .modal-description { padding: 20px; color: #333; }
+    .close-btn {
+      position: absolute;
+      top: 20px; right: 30px;
+      font-size: 2rem;
+      color: white; cursor: pointer;
+    }
+
+
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: #fff;
+      background: var(--rojo-corall);
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="main-header">
+    <div class="brand">
+      <div class="logo">
+        <img src="ima/logo oficial para usar -13.png" alt="Logo" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+      <div>
+        <div class="site-name">Carnicería del Norte</div>
+        <div style="font-size:12px;color:var(--muted)">Calidad y frescura</div>
+      </div>
+    </div>
+
+    <button class="menu-toggle">☰</button>
+    <nav class="nav">
+      <a href="index.html">Inicio</a>
+      <a href="productos.html">Productos</a>
+      <a href="sobrenosotros.html">Sobre Nosotros</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+  </header>
+
+
+  <section class="hero">
+    <div class="hero-left">
+      <h1>Nuestros Cortes Premium</h1>
+      <p>Seleccionamos solo los mejores cortes de carne para garantizarte sabor, textura y frescura. Descubre nuestra selección y disfruta la experiencia de la verdadera calidad.</p>
+    </div>
+    <div class="hero-right"></div>
+  </section>
+
+
+  <section class="gallery-container">
+    <div class="column">
+      <img src="https://statics.dinoonline.com.ar/imagenes/full_600x600_ma/3400085_f.jpg" alt="Bife de chorizo" data-desc="Corte grueso, jugoso y lleno de sabor. Ideal para la parrilla.">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3tBtHisQ479GweWy0GWUsOL4PQuC1hPTXzA&s" alt="Filete fino" data-desc="Corte tierno y elegante, con una textura suave y jugosa.">
+      <img src="https://vinomanos.com/wp-content/uploads/2020/07/x_matambre-de-ternera.jpg" alt="Matambre" data-desc="Sabor tradicional, excelente para enrollados y parrilladas.">
+    </div>
+    <div class="column">
+      <img src="https://i.pinimg.com/736x/06/bc/3b/06bc3b038f807c5275291eb7cb013b48.jpg" alt="Costillas BBQ" data-desc="Costillas tiernas marinadas en nuestra salsa especial BBQ.">
+      <img src="https://www.carnesbilbao.cl/wp-content/uploads/2020/04/asado-de-tira-di-scottona-cruda-compress.webp" alt="Asado de tira" data-desc="Clásico de la parrilla argentina, con el punto justo de grasa.">
+      <img src="https://thumbs.dreamstime.com/b/solomillo-de-crudo-o-bistec-picanha-sobre-tabla-madera-con-tomillo-fondo-oscura-vista-superior-215077835.jpg" alt="Picanha" data-desc="La reina del sabor brasileño, con una capa de grasa que potencia su jugosidad.">
+    </div>
+    <div class="column">
+      <img src="https://braseriaelcarbon.com/wp-content/uploads/2024/08/Chuleton-de-ternera.jpg" alt="Chuletón" data-desc="Corte con hueso, intenso en sabor y aroma.">
+      <img src="https://tienda-trailenco.cl/cdn/shop/files/IMG_1922.jpg?crop=center&height=2673&v=1697552314&width=2673" alt="Lomo liso" data-desc="Suavidad y sabor intenso, recomendado para sellar a fuego alto.">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQz5d88_2eOwgH1SG0o_P-3uzszxpSiRxVoF1R-my7GPvA34_g5KSWHaORxTbRN_quQzK4&usqp=CAU" alt="Entrecot" data-desc="Sabor equilibrado y textura perfecta para los paladares exigentes.">
+    </div>
+  </section>
+
+
+  <div class="modal" id="modal">
+    <span class="close-btn" id="closeBtn">&times;</span>
+    <div class="modal-content">
+      <img id="modalImg" src="" alt="">
+      <div class="modal-description" id="modalDesc"></div>
+    </div>
+  </div>
+
+  <footer id="contacto">
+    <p>© 2025 Carnicería del Norte — Calidad y frescura.</p>
+  </footer>
+
+  <script>
+
+    const menuBtn = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.nav');
+    menuBtn.addEventListener('click', ()=> nav.classList.toggle('active'));
+
+
+    const imgs = document.querySelectorAll('.column img');
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modalImg');
+    const modalDesc = document.getElementById('modalDesc');
+    const closeBtn = document.getElementById('closeBtn');
+
+    imgs.forEach(img => {
+      img.addEventListener('click', ()=>{
+        modal.style.display = 'flex';
+        modalImg.src = img.src;
+        modalDesc.innerHTML = `<h2>${img.alt}</h2><p>${img.dataset.desc}</p>`;
+      });
+    });
+
+    closeBtn.onclick = ()=> modal.style.display = 'none';
+    modal.onclick = e => { if(e.target === modal) modal.style.display = 'none'; };
+
+
+    window.addEventListener('scroll', () => {
+      const heroRight = document.querySelector('.hero-right');
+      const scrollY = window.scrollY;
+      heroRight.style.backgroundPositionY = `${scrollY * 0.4}px`;
+    });
+  </script>
+
+
+
+</body>
+</html>

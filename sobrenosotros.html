@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sobre Nosotros — Carnicería del Norte</title>
+  <meta name="description" content="Conoce la historia, valores y curiosidades de Carnicería del Norte.">
+  <style>
+    :root {
+      --rojo-corall: #e06a65;
+      --azul-pastel: #3b6b9a;
+      --fondo: #00417e;
+      --muted:#7b8794;
+      --card:#ffffff;
+      --radius:14px;
+      --max:1200px;
+    }
+    * {box-sizing:border-box;margin:0;padding:0;}
+    html,body {
+      font-family: Inter, Roboto, Arial, sans-serif;
+      background: var(--fondo);
+      color: #111;
+      scroll-behavior: smooth;
+    }
+    a { text-decoration:none; color:inherit; }
+
+    
+    
+    header.main-header {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 60;
+      width: calc(100% - 32px);
+      max-width: var(--max);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.7), rgba(255,255,255,0.55));
+      backdrop-filter: blur(6px);
+      border-radius: 999px;
+      box-shadow: 0 6px 20px rgba(17,24,39,0.08);
+    }
+    .brand { display:flex; align-items:center; gap:10px; }
+    .logo {
+      width: 56px; height: 56px;
+      border-radius: 999px; overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .site-name { font-weight: 700; color: var(--azul-pastel); font-size: 1.05rem; }
+    nav.nav { display: flex; gap: 10px; align-items: center; }
+    .nav a {
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-weight: 600;
+      background: var(--azul-pastel);
+      color: #fff;
+      font-size: 0.95rem;
+      transition: all 0.25s ease-in-out;
+      box-shadow: 0 4px 12px rgba(59,107,154,0.25);
+    }
+    .nav a:hover {
+      background: linear-gradient(90deg, var(--azul-pastel), var(--rojo-corall));
+      box-shadow: 0 0 14px rgba(59,107,154,0.6), 0 0 22px rgba(224,106,101,0.5);
+      text-shadow: 0 0 6px rgba(255,255,255,0.7);
+      transform: scale(1.05);
+    }
+    .menu-toggle { display: none; background: transparent; border: none; font-size: 1.6rem; color: var(--azul-pastel); cursor:pointer; }
+    @media(max-width:820px){
+      nav.nav{display:none;flex-direction:column;width:100%;background:rgba(255,255,255,0.95);border-radius:14px;margin-top:8px;}
+      nav.nav.active{display:flex;animation:fadeIn 0.3s ease;}
+      .nav a{display:block;text-align:center;padding:12px;}
+      .menu-toggle{display:block;}
+      @keyframes fadeIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+    }
+
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      height: 80vh;
+      margin-top: 90px;
+      overflow: hidden;
+    }
+    .hero-left {
+      background: linear-gradient(135deg, rgba(59,107,154,0.9), rgba(224,106,101,0.8));
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px;
+      text-shadow: 0 4px 14px rgba(0,0,0,0.4);
+    }
+    .hero-left h1 { font-size: 2.8rem; margin-bottom: 16px; }
+    .hero-left p { font-size: 1.2rem; max-width: 480px; line-height: 1.6; }
+   .hero-right {
+  background-image: url('ima/4.jpg');
+  background-size: cover;
+  background-position: left;
+  background-repeat: repeat-x;
+  background-attachment: fixed;
+  animation: moverFondo 15s linear infinite;
+}
+
+
+@keyframes moverFondo {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+
+    .historia {
+      max-width: var(--max);
+      margin: 80px auto;
+      padding: 0 16px;
+      text-align: center;
+      color: white;
+    }
+    .historia h2 { font-size: 2rem; margin-bottom: 20px; }
+    .historia p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #eef3f8;
+    }
+
+
+    .valores {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+      gap: 24px;
+      max-width: var(--max);
+      margin: 80px auto;
+      padding: 0 16px;
+    }
+    .valor {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .valor::after {
+      content: "";
+      position: absolute;
+      top: -100%;
+      left: -100%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.5) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .valor:hover::after {
+      opacity: 1;
+      animation: shine 1.2s linear infinite;
+    }
+    @keyframes shine {
+      0% {transform: translate(-100%, -100%) rotate(45deg);}
+      100% {transform: translate(100%, 100%) rotate(45deg);}
+    }
+    .valor:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+    }
+    .valor h3 { color: var(--azul-pastel); margin-bottom: 12px; }
+    .valor p { color: var(--muted); }
+
+
+    .curiosos {
+      max-width: var(--max);
+      margin: 100px auto;
+      padding: 0 16px;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+    }
+    .curiosos h2 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+    }
+    .carrusel {
+      display: flex;
+      gap: 20px;
+      overflow: hidden;
+      padding-bottom: 16px;
+      perspective: 1000px;
+    }
+    .carrusel-track {
+      display: flex;
+      gap: 20px;
+      animation: scrollInfinite 60s linear infinite;
+    }
+    @keyframes scrollInfinite {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .card-curioso {
+      flex: 0 0 auto;
+      width: 280px;
+      height: 200px;
+      position: relative;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transition: transform 0.8s;
+    }
+    .card-curioso img,
+    .card-curioso .back {
+      width: 100%;
+      height: 100%;
+      border-radius: 14px;
+      backface-visibility: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    .card-curioso img {
+      object-fit: cover;
+    }
+    .card-curioso .back {
+      background: var(--card);
+      color: #333;
+      position: absolute;
+      top: 0; left: 0;
+      transform: rotateY(180deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      font-size: 0.95rem;
+      border-radius: 14px;
+    }
+    .card-curioso.flipped { transform: rotateY(180deg); }
+
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: #fff;
+      background: var(--rojo-corall);
+      margin-top: 80px;
+    }
+
+
+
+
+
+
+
+
+.rompecabezas {
+  margin: 80px auto;
+  text-align: center;
+  color: white;
+  max-width: 800px;
+}
+
+#puzzle-container {
+  width: 360px;
+  height: 360px;
+  margin: 25px auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.piece {
+  width: 100%;
+  height: 100%;
+  background-size: 360px 360px;
+  cursor: grab;
+  border-radius: 8px;
+  transition: transform 0.2s;
+}
+
+.piece:active {
+  cursor: grabbing;
+  transform: scale(1.05);
+}
+
+#puzzle-win {
+  font-size: 1.3rem;
+  color: gold;
+  background: rgba(255,255,255,0.2);
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+  box-shadow: 0 0 22px rgba(255,255,255,0.7);
+  animation: aparecer 0.8s ease forwards;
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes aparecer {
+  0% {opacity: 0; transform: scale(0.85);}
+  100% {opacity: 1; transform: scale(1);}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    .valor {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+
+.valor .epic-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius);
+  opacity: 0;
+  transform: scale(1.6) rotate(10deg);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  z-index: -1;
+}
+
+
+
+.valor.exploding {
+  animation: boomPulse 0.8s ease forwards;
+}
+
+@keyframes boomPulse {
+  0% { transform: scale(1); box-shadow: 0 0 18px rgba(255,255,255,0.3); }
+  50% { transform: scale(1.15); box-shadow: 0 0 35px rgba(255,255,255,0.7); }
+  100% { transform: scale(1.05); }
+}
+
+
+.valor.show-epic .epic-img {
+  opacity: 1;
+  transform: scale(1) rotate(0);
+  z-index: 5;
+}
+
+  </style>
+</head>
+<body>
+
+  <header class="main-header">
+    <div class="brand">
+      <div class="logo">
+        <img src="ima/logo oficial para usar -13.png" alt="Logo" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+      <div>
+        <div class="site-name">Carnicería del Norte</div>
+        <div style="font-size:12px;color:var(--muted)">Calidad y frescura</div>
+      </div>
+    </div>
+
+    <button class="menu-toggle">☰</button>
+    <nav class="nav">
+      <a href="index.html">Inicio</a>
+      <a href="productos.html">Productos</a>
+      <a href="sobrenosotros.html">Sobre Nosotros</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+  </header>
+
+
+  <section class="hero">
+    <div class="hero-left">
+      <h1>Más de 20 años ofreciendo calidad</h1>
+      <p>En Carnicería del Norte nos apasiona la buena carne. Desde nuestros inicios, hemos trabajado con productores locales para ofrecer siempre los mejores cortes, frescos, tiernos y con sabor auténtico.</p>
+    </div>
+    <div class="hero-right"></div>
+  </section>
+
+
+  <section class="historia">
+    <h2>Nuestra Historia</h2>
+    <p>Fundada en 2005, Carnicería del Norte nació con el propósito de acercar a las familias los cortes más frescos del mercado. Con el paso de los años, nos hemos convertido en un referente regional, gracias a la confianza de nuestros clientes y el compromiso de nuestro equipo.</p>
+  </section>
+
+
+<section class="valores">
+  <div class="valor">
+    <img class="epic-img" src="ima/patron1.png">
+    <h3>Calidad</h3>
+    <p>Seleccionamos cuidadosamente cada pieza para garantizar frescura.</p>
+  </div>
+
+  <div class="valor">
+    <img class="epic-img" src="ima/1.jpg">
+    <h3>Tradición</h3>
+    <p>Mantenemos las recetas y métodos tradicionales.</p>
+  </div>
+
+  <div class="valor">
+    <img class="epic-img" src="ima/patron2.png">
+    <h3>Compromiso</h3>
+    <p>Apoyamos a productores locales y la economía regional.</p>
+  </div>
+</section>
+
+
+
+
+  <section class="curiosos">
+    <h2>Datos Curiosos</h2>
+    <div class="carrusel">
+      <div class="carrusel-track" id="track"></div>
+    </div>
+  </section>
+
+
+<section class="rompecabezas">
+  <h2>Arma la Chuleta</h2>
+  <p>Completa el rompecabezas y gana puntos 🎉</p>
+
+  <div id="puzzle-container"></div>
+
+  <div id="puzzle-win" class="hidden">
+    🎉 ¡Felicidades!  
+    <br>
+    Ganaste <strong>15 puntos</strong> para tu próxima compra.
+  </div>
+</section>
+
+
+  <footer id="contacto">
+    <p>© 2025 Carnicería del Norte — Pasión, tradición y calidad.</p>
+  </footer>
+
+  <script>
+
+    const menuBtn = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.nav');
+    menuBtn.addEventListener('click', ()=> nav.classList.toggle('active'));
+
+
+    window.addEventListener('scroll', () => {
+      const heroRight = document.querySelector('.hero-right');
+      heroRight.style.backgroundPositionY = `${window.scrollY * 0.4}px`;
+    });
+
+
+    const datos = [
+      {img:"https://cdni.iconscout.com/illustration/premium/thumb/hombre-carnicero-haciendo-factura-en-la-carniceria-illustration-svg-download-png-8159536.png", texto:"Cada corte de carne tiene un sabor distinto según su marmoleo natural."},
+      {img:"https://i.pinimg.com/736x/be/4a/ca/be4aca3398de0b2343732c12e0538a90.jpg", texto:"El asado argentino es Patrimonio Cultural Inmaterial desde 2022."},
+      {img:"https://i.pinimg.com/736x/85/6c/12/856c1272569c75f2a15ef7e700e10c84.jpg", texto:"Una vaca promedio produce más de 200 kg de carne aprovechable."},
+      {img:"https://i.pinimg.com/736x/ec/33/a5/ec33a52d096a9682af8c396da84cfeb0.jpg", texto:"La picanha es uno de los cortes más populares en Brasil."},
+      {img:"https://i.pinimg.com/736x/1f/e6/37/1fe637a8958e9ddbd6435fcdbb798ff9.jpg", texto:"El color rojo brillante de la carne se debe a la mioglobina."},
+      {img:"https://i.pinimg.com/736x/90/e0/1b/90e01b42d888e9cce50ed6af62716c52.jpg", texto:"La carne madurada puede desarrollar hasta 100 sabores distintos."},
+      {img:"https://i.pinimg.com/736x/a4/61/99/a4619905eb3a0dd0cefc001fda3b2cd0.jpg", texto:"El bistec tártaro se sirve crudo y es muy popular en Europa."},
+      {img:"https://i.pinimg.com/1200x/5a/5e/a1/5a5ea15c0e989a7902f7838b49ce039c.jpg", texto:"Los cortes magros aportan proteína sin exceso de grasa."},
+      {img:"https://i.pinimg.com/736x/c4/b1/ae/c4b1ae83c9549d3f9b0a1155c0a147d7.jpg", texto:"Los asadores usan carbón vegetal por su calor seco y constante."},
+      {img:"https://i.pinimg.com/736x/5f/0a/ee/5f0aee07864e859254c06e5319ca8b75.jpg", texto:"En Japón, la carne Wagyu se masajea para lograr su textura única."}
+    ];
+
+    const track = document.getElementById("track");
+
+
+    const full = datos.concat(datos);
+    full.forEach(d=>{
+      const card=document.createElement("div");
+      card.className="card-curioso";
+      card.innerHTML=`
+        <img src="${d.img}?w=400&q=80" alt="">
+        <div class="back">${d.texto}</div>`;
+      track.appendChild(card);
+    });
+
+
+    track.addEventListener("click", e=>{
+      const card = e.target.closest(".card-curioso");
+      if(!card) return;
+      card.classList.toggle("flipped");
+    });
+
+
+  document.querySelectorAll(".valor").forEach(box => {
+    box.addEventListener("click", () => {
+      
+      if (box.classList.contains("show-epic")) return;
+
+      box.classList.add("exploding");
+
+      setTimeout(() => {
+        box.classList.add("show-epic");
+      }, 800);
+
+    });
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const puzzleImg = "ima/2.jpeg";  
+
+  const container = document.getElementById("puzzle-container");
+  const winMsg = document.getElementById("puzzle-win");
+
+ 
+  let pieces = [];
+  let order = [];
+
+  for (let i = 0; i < 9; i++) {
+    order.push(i);
+  }
+
+
+  order.sort(() => Math.random() - 0.5);
+
+  order.forEach((pos, index) => {
+    const piece = document.createElement("div");
+    piece.classList.add("piece");
+
+    const x = (pos % 3) * -120;
+    const y = Math.floor(pos / 3) * -120;
+
+    piece.style.backgroundImage = `url('${puzzleImg}')`;
+    piece.style.backgroundPosition = `${x}px ${y}px`;
+
+    piece.setAttribute("data-pos", pos);
+    piece.setAttribute("draggable", "true");
+
+    container.appendChild(piece);
+    pieces.push(piece);
+  });
+
+
+  
+  let dragged = null;
+
+  pieces.forEach(piece => {
+    piece.addEventListener("dragstart", () => {
+      dragged = piece;
+    });
+
+    piece.addEventListener("dragover", e => {
+      e.preventDefault();
+    });
+
+    piece.addEventListener("drop", e => {
+      const target = e.target;
+
+      const posA = dragged.style.backgroundPosition;
+      const posB = target.style.backgroundPosition;
+
+      const dataA = dragged.getAttribute("data-pos");
+      const dataB = target.getAttribute("data-pos");
+
+      dragged.style.backgroundPosition = posB;
+      target.style.backgroundPosition = posA;
+
+      dragged.setAttribute("data-pos", dataB);
+      target.setAttribute("data-pos", dataA);
+
+      checkWin();
+    });
+  });
+
+
+  function checkWin() {
+    let correcto = true;
+
+    pieces.forEach((p, i) => {
+      if (p.getAttribute("data-pos") != i) correcto = false;
+    });
+
+    if (correcto) {
+      winMsg.classList.remove("hidden");
+
+
+      let puntos = localStorage.getItem("puntosCarniceria") || 0;
+      puntos = Number(puntos) + 15;
+      localStorage.setItem("puntosCarniceria", puntos);
+
+      console.log("Puntos acumulados:", puntos);
+    }
+  }
+
+
+  </script>
+
+
+
+</body>
+</html>
